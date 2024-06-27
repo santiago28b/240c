@@ -46,7 +46,7 @@ public class ChessMove {
     }
 
     public String toString(){
-        return ("start: "+ start +", end: "+ end +", pieceType: "+ pieceType + ".");
+        return ("start: "+ start +", end: "+ end +", promotion piece: "+ pieceType + ".");
     }
 
     @Override
