@@ -37,7 +37,7 @@ public class ChessPosition {
     @Override
     public String toString(){
 
-        return ("row: " + row + ", column: "+column + ".");
+        return ("row: " + row + ", column: "+ column + ".");
     }
 
     @Override

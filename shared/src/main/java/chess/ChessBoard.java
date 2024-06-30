@@ -88,8 +88,8 @@ public class ChessBoard {
 
         //black queen and black king
 
-        squares[7][4] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.QUEEN);
-        squares[7][3] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.KING);
+        squares[7][3] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.QUEEN);
+        squares[7][4] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.KING);
 
         //white Knight
 
@@ -102,9 +102,35 @@ public class ChessBoard {
         squares[0][5] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.BISHOP);
 
         //white queen and king
-        squares[0][4] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.QUEEN);
-        squares[0][3] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KING);
+        squares[0][3] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.QUEEN);
+        squares[0][4] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KING);
 
     }
 
+        public String toString(){
+        StringBuilder board = new StringBuilder();
+
+        for(int row = 7; row >= 0; row--){
+            board.append("|");
+            for(int col = 0; col < 8; col++){
+                board.append(squares[row][col] != null ? squares[row][col].toString(): " ");
+                board.append("|");
+            }
+            board.append("\n");
+        }
+        return board.toString();
+        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this==o) return true;
+        if (o==null || getClass()!=o.getClass()) return false;
+        ChessBoard that=(ChessBoard) o;
+        return Arrays.deepEquals(squares, that.squares);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(squares);
+    }
 }
