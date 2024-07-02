@@ -41,7 +41,7 @@ public interface MoveCalculator {
     return true;
   }
 
-  static HashSet<ChessMove> relativeMoves(ChessPosition position, int[][] possibleDirections, ChessBoard board) {
+  static HashSet<ChessMove> relativeMoves(ChessPosition position, int[][] possibleDirections, ChessBoard board,boolean singleStep) {
     HashSet<ChessMove> possibleMoves=new HashSet<>(27); // this is the max amount of mmoves that a queen can have
     int currentRow=position.getRow();
     int currentCol=position.getColumn();
@@ -65,6 +65,9 @@ public interface MoveCalculator {
           } else{
             blocking = true;
           }
+        }
+        if (singleStep) {
+          blocking = true; // For single-step moves like King
         }
         i++;
       } //end of while
