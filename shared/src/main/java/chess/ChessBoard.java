@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.Arrays;
-
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -9,7 +7,7 @@ import java.util.Arrays;
  * signature of the existing methods.
  */
 public class ChessBoard {
-    private ChessPiece[][] squares = new ChessPiece[8][8];
+
     public ChessBoard() {
 
     }
@@ -21,8 +19,7 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        squares[position.getRow()-1][position.getColumn()-1] = piece;
-
+        throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -33,14 +30,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        return squares[position.getRow()-1][position.getColumn()-1];
-    }
-
-    public ChessGame.TeamColor getColorOfPieceinSquare(ChessPosition position){
-        if(getPiece(position)!= null){
-            return getPiece(position).getTeamColor();
-        }
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -48,92 +38,6 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-
-        squares = new ChessPiece[8][8];
-        //white pawns
-        squares[1][0] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][1] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][2] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][3] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][4] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][5] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][6] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-        squares[1][7] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.PAWN);
-
-        //black pawns
-
-        squares[6][0] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][1] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][2] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][3] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][4] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][5] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][6] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-        squares[6][7] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.PAWN);
-
-        // white rooks
-        squares[0][0] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.ROOK);
-        squares[0][7] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.ROOK);
-
-        //black rooks
-        squares[7][0] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.ROOK);
-        squares[7][7] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.ROOK);
-
-        // black Knight
-
-        squares[7][1] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.KNIGHT);
-        squares[7][6] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.KNIGHT);
-
-        //black bishop
-
-        squares[7][2] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.BISHOP);
-        squares[7][5] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.BISHOP);
-
-        //black queen and black king
-
-        squares[7][3] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.QUEEN);
-        squares[7][4] = new ChessPiece(ChessGame.TeamColor.BLACK,ChessPiece.PieceType.KING);
-
-        //white Knight
-
-        squares[0][1] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KNIGHT);
-        squares[0][6] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KNIGHT);
-
-        //white bishop
-
-        squares[0][2] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.BISHOP);
-        squares[0][5] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.BISHOP);
-
-        //white queen and king
-        squares[0][3] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.QUEEN);
-        squares[0][4] = new ChessPiece(ChessGame.TeamColor.WHITE,ChessPiece.PieceType.KING);
-
-    }
-
-        public String toString(){
-        StringBuilder board = new StringBuilder();
-
-        for(int row = 7; row >= 0; row--){
-            board.append("|");
-            for(int col = 0; col < 8; col++){
-                board.append(squares[row][col] != null ? squares[row][col].toString(): " ");
-                board.append("|");
-            }
-            board.append("\n");
-        }
-        return board.toString();
-        }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this==o) return true;
-        if (o==null || getClass()!=o.getClass()) return false;
-        ChessBoard that=(ChessBoard) o;
-        return Arrays.deepEquals(squares, that.squares);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(squares);
+        throw new RuntimeException("Not implemented");
     }
 }
