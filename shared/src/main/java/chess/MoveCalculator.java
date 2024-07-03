@@ -6,11 +6,13 @@ import java.util.HashSet;
 public interface MoveCalculator {
 
 
-  static HashSet<ChessMove> getPieceMoves(ChessBoard board, ChessPosition myPosition) {
+   static HashSet<ChessMove> getPieceMoves(ChessBoard board, ChessPosition myPosition){
+     return null; // it returns null because it won't be implemented here, rather in the concrete classess that implement this interface
 
-    return null; // it returns null because it won't be implemented here, rather in the concrete classess that implement this interface
+   }
 
-  }
+
+
 
 
   static HashSet<ChessMove> staticMove(ChessPosition current, int[][] possiblePosition, ChessBoard board) {

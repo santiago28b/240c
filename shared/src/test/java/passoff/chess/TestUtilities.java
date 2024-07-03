@@ -13,6 +13,18 @@ public class TestUtilities {
         var board = loadBoard(boardText);
         var testPiece = board.getPiece(startPosition);
         var validMoves = loadMoves(startPosition, endPositions);
+
+        //I added this
+        var pieceMoves = new HashSet<>(testPiece.pieceMoves(board, startPosition));
+
+        System.out.println("Expected moves:");
+        validMoves.forEach(System.out::println);
+        System.out.println("Actual moves:");
+        pieceMoves.forEach(System.out::println);
+        assertCollectionsEquals(validMoves, pieceMoves, "Wrong moves");
+
+
+        //until up here
         validateMoves(board, testPiece, startPosition, validMoves);
     }
 
