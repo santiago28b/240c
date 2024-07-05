@@ -69,8 +69,11 @@ public class ChessPiece {
       case KNIGHT -> {
         return new KnightMovesCalculator().pieceMoves(board,myPosition);
       }
+      case PAWN -> {
+        return new PawnMovesCalculator().pieceMoves(board,myPosition);
+      }
     }
-    return new KnightMovesCalculator().pieceMoves(board,myPosition);
+    return null;
   }
 
   @Override
@@ -108,6 +111,7 @@ public class ChessPiece {
       case PAWN -> {
         return pieceColor == ChessGame.TeamColor.WHITE ? ("P"):("p");
       }
+
     }
     return "0";
   }
