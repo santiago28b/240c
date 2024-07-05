@@ -3,6 +3,7 @@ package chess;
 import java.util.Collection;
 import java.util.Objects;
 
+
 /**
  * Represents a single chess piece
  * <p>
@@ -52,7 +53,22 @@ public class ChessPiece {
    * @return Collection of valid moves
    */
   public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-    throw new RuntimeException("Not sapo lambon");
+    switch (type){
+      case KING -> {
+        return new KingMovesCalculator().pieceMoves(board,myPosition);
+      }
+      case QUEEN -> {
+        return new QueenMovesCalculator().pieceMoves(board,myPosition);
+      }
+      case BISHOP -> {
+        return new BishopMovesCalculator().pieceMoves(board,myPosition);
+      }
+      case ROOK -> {
+        return new RookMovesCalculator().pieceMoves(board,myPosition);
+      }
+    }
+    return new RookMovesCalculator().pieceMoves(board,myPosition);
+
   }
 
   @Override
