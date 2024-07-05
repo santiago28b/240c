@@ -66,9 +66,11 @@ public class ChessPiece {
       case ROOK -> {
         return new RookMovesCalculator().pieceMoves(board,myPosition);
       }
+      case KNIGHT -> {
+        return new KnightMovesCalculator().pieceMoves(board,myPosition);
+      }
     }
-    return new RookMovesCalculator().pieceMoves(board,myPosition);
-
+    return new KnightMovesCalculator().pieceMoves(board,myPosition);
   }
 
   @Override
