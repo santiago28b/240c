@@ -131,15 +131,6 @@ public class PawnMovesCalculator extends PieceMovesCalculator {
     validMoves.add(new ChessMove(start, end, ChessPiece.PieceType.ROOK));
     validMoves.add(new ChessMove(start, end, ChessPiece.PieceType.KNIGHT));
   }
-
-  boolean isValidMove(ChessPosition position) {
-    if (position.getRow()>=1 && position.getRow()<=8) {
-      if (position.getColumn()>=1 && position.getColumn()<=8) {
-        return true;
-      }
-    }
-    return false;
-  }
 }
 
 

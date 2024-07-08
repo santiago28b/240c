@@ -50,14 +50,5 @@ public class KingMovesCalculator extends PieceMovesCalculator{
     return validMoves;
   }
 
-  boolean isValidMove(ChessPosition position){
-    if(position.getRow()>=1 && position.getRow() <=8){
-      if(position.getColumn()>=1 && position.getColumn()<=8){
-        return true;
-      }
-    }
-    return false;
-  }
-
 
 }
