@@ -151,7 +151,7 @@ public class ChessGame {
                 ChessPosition possible = new ChessPosition(row,col);
                 ChessPiece piece = board.getPiece(possible);
                 if(board.getPiece(possible) != null){
-                    if(piece.getTeamColor() == teamColor && piece.getPieceType()==ChessPiece.PieceType.KING){
+                    if(piece.getTeamColor().equals(teamColor) && piece.getPieceType().equals(ChessPiece.PieceType.KING)){
                         kingPosition = possible;
                         return kingPosition;
                     }
