@@ -51,12 +51,56 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
+        HashSet<ChessMove>realMoves = new HashSet<>();
        if( board.getPiece(startPosition) == null){
            return null;
        }
+       else{
+
+           ChessPiece pieceToMove = board.getPiece(startPosition);
+           if(isInCheck(pieceToMove.getTeamColor())){
+                ChessBoard copyboard = new ChessBoard();
+
+                for(int row =1; row <= 8; row++){
+                    for(int col = 1; col<=8; col++){
+                        ChessPosition position = new ChessPosition(row,col);
+                        ChessPiece piece = board.getPiece(position);
+                        if(piece!= null){
+                            ChessPiece newPiece = new ChessPiece(piece.getTeamColor(),piece.getPieceType());
+                            copyboard.addPiece(position,newPiece);
+                        }
+                    }
+                }// end of copying board
+               int i = 1;
+               ChessBoard original = this.board;
+               for(ChessMove move: pieceToMove.pieceMoves(copyboard,startPosition)){
+
+
+                   System.out.println(original.toString() + "original " + i );
+                   this.board = copyboard;
+                   System.out.println(copyboard + "copia " + i);
+                   simulateMove(copyboard,move);
+                   System.out.println(copyboard +"copia depues del movimiento " + i);
+                   boolean inCheck = isInCheck(pieceToMove.getTeamColor());
+                   copyboard = original;
+                   System.out.println(copyboard +" copia restablecida " + i);
+                   this.board = original;
+                   System.out.println(this.board + "original restablecida " + i);
+                   i+=1;
+                   if(!inCheck){
+                       realMoves.add(move);
+                   }
+               }// end of for loop
+           } //end of if is in Check
+           else{
+               for(ChessMove move: pieceToMove.pieceMoves(board,startPosition)){
+                   realMoves.add(move);
+                    }
+           }
+       }
        //filter moves so have actual moves that do not put the king in danger.
 
-       return board.getPiece(startPosition).pieceMoves(board,startPosition);
+       return realMoves;
        //second
     }
 
@@ -85,7 +129,7 @@ public class ChessGame {
        for(int row = 1; row <= 8; row++){
            for (int col = 1; col <= 8; col++){
               ChessPosition possible = new ChessPosition(row,col);
-              if(board.getPiece(possible)!= null){
+              if(board.getPiece(possible)!= null){  //finding opponent pieces that may put king in Check
                   if(board.getPiece(possible).getTeamColor() != board.getPiece(kingPosition).getTeamColor()){
                       pieceOppositePosition = new ChessPosition(row,col);
                       ChessPiece opposite = new ChessPiece(board.getPiece(pieceOppositePosition).getTeamColor(),board.getPiece(pieceOppositePosition).getPieceType());
@@ -160,4 +204,13 @@ public class ChessGame {
         }
         return null;
     }
+
+    private void simulateMove(ChessBoard boardCopy, ChessMove move){
+                ChessPiece piece = boardCopy.getPiece(move.getStartPosition());
+                boardCopy.addPiece(move.getStartPosition(),null); //moving it from original position
+                boardCopy.addPiece(move.getEndPosition(),piece);
+    }
+
 }
+
+

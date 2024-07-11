@@ -112,9 +112,15 @@ public class ChessBoard {
     public String toString() {
         StringBuilder board = new StringBuilder();
 
-        for(int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                board.append("| ");
+        for(int i = 8; i >= 1; i--){
+            for (int j = 1; j <= 8; j++){
+                ChessPosition position = new ChessPosition(i,j);
+                ChessPiece piece = getPiece(position);
+                if (piece != null) {
+                    board.append("|").append(piece);
+                }else {
+                    board.append("| ");
+                }
             }
             board.append("|\n");
         }
