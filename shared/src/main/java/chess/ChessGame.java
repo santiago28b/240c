@@ -102,8 +102,6 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
        ChessPosition kingPosition = findKing(teamColor);
-     //  Collection<Collection<ChessMove>> validMoves = new HashSet<>();
-
        ChessPosition pieceOppositePosition = null;
        for(int row = 1; row <= 8; row++){
            for (int col = 1; col <= 8; col++){
@@ -112,7 +110,6 @@ public class ChessGame {
                   if(board.getPiece(possible).getTeamColor() != board.getPiece(kingPosition).getTeamColor()){
                       pieceOppositePosition = new ChessPosition(row,col);
                       ChessPiece opposite = new ChessPiece(board.getPiece(pieceOppositePosition).getTeamColor(),board.getPiece(pieceOppositePosition).getPieceType());
-                      //validMoves.add(opposite.pieceMoves(board,pieceOppositePosition));
                       Collection<ChessMove> validMoves = opposite.pieceMoves(board,pieceOppositePosition);
                       for (ChessMove move : validMoves){
                             if(move.getEndPosition().equals(kingPosition)){
