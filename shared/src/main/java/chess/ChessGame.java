@@ -153,11 +153,19 @@ public class ChessGame {
      */
     public boolean isInStalemate(TeamColor teamColor) {
 
-        //forth suggestion.
-
-
-
-        return true;
+        if(isInCheck(teamColor)){
+            return false;
+        }
+        HashSet<ChessMove> saveStaleMate = new HashSet<>();
+        for(int row = 1; row <= 8; row++){
+            for(int col =1; col<=8; col++){
+                ChessPosition position = new ChessPosition(row,col);
+                if(board.getPiece(position)!= null && board.getPiece(position).getTeamColor().equals(teamColor)){
+                    saveStaleMate.addAll(validMoves(position));
+                }
+            }
+        }
+        return saveStaleMate.isEmpty();
     }
 
     /**
