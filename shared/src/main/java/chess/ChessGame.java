@@ -58,51 +58,28 @@ public class ChessGame {
        else{
 
            ChessPiece pieceToMove = board.getPiece(startPosition);
-           if(isInCheck(pieceToMove.getTeamColor())){
-                ChessBoard copyboard = new ChessBoard();
 
-                for(int row =1; row <= 8; row++){
-                    for(int col = 1; col<=8; col++){
-                        ChessPosition position = new ChessPosition(row,col);
-                        ChessPiece piece = board.getPiece(position);
-                        if(piece!= null){
-                            ChessPiece newPiece = new ChessPiece(piece.getTeamColor(),piece.getPieceType());
-                            copyboard.addPiece(position,newPiece);
-                        }
-                    }
-                }// end of copying board
-               int i = 1;
-               ChessBoard original = this.board;
+                ChessBoard copyboard = boardCopy(board);
+                // end of copying board
+               ChessBoard original = boardCopy(board);
+
                for(ChessMove move: pieceToMove.pieceMoves(copyboard,startPosition)){
 
-
-                   System.out.println(original.toString() + "original " + i );
                    this.board = copyboard;
-                   System.out.println(copyboard + "copia " + i);
                    simulateMove(copyboard,move);
-                   System.out.println(copyboard +"copia depues del movimiento " + i);
                    boolean inCheck = isInCheck(pieceToMove.getTeamColor());
-                   copyboard = original;
-                   System.out.println(copyboard +" copia restablecida " + i);
-                   this.board = original;
-                   System.out.println(this.board + "original restablecida " + i);
-                   i+=1;
+                   copyboard = boardCopy(original);
+                  this.board = boardCopy(original);
                    if(!inCheck){
                        realMoves.add(move);
                    }
                }// end of for loop
-           } //end of if is in Check
-           else{
-               for(ChessMove move: pieceToMove.pieceMoves(board,startPosition)){
-                   realMoves.add(move);
-                    }
-           }
        }
        //filter moves so have actual moves that do not put the king in danger.
-
        return realMoves;
        //second
     }
+
 
     /**
      * Makes a move in a chess game
@@ -113,6 +90,8 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         throw new RuntimeException("Not implemented");
         //implemet if of team turn switch here.
+
+
     }
 
     /**
@@ -209,6 +188,21 @@ public class ChessGame {
                 ChessPiece piece = boardCopy.getPiece(move.getStartPosition());
                 boardCopy.addPiece(move.getStartPosition(),null); //moving it from original position
                 boardCopy.addPiece(move.getEndPosition(),piece);
+    }
+
+    private ChessBoard boardCopy(ChessBoard board){
+        ChessBoard copy = new ChessBoard();
+        for(int row =1; row <= 8; row++){
+            for(int col = 1; col<=8; col++){
+                ChessPosition position = new ChessPosition(row,col);
+                ChessPiece piece = board.getPiece(position);
+                if(piece!= null){
+                    ChessPiece newPiece = new ChessPiece(piece.getTeamColor(),piece.getPieceType());
+                    copy.addPiece(position,newPiece);
+                }
+            }
+        }// end of copying board
+        return copy;
     }
 
 }
