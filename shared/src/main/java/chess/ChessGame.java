@@ -90,8 +90,6 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         throw new RuntimeException("Not implemented");
         //implemet if of team turn switch here.
-
-
     }
 
     /**
@@ -130,8 +128,20 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
         //third
+        if(!isInCheck(teamColor)){
+            return false;
+        }
+        HashSet<ChessMove>saveTheKingMoves = new HashSet<>();
+        for(int  row =1; row<=8; row++){
+            for (int col =1; col<=8; col++){
+                ChessPosition position = new ChessPosition(row,col);
+                if(board.getPiece(position) != null && board.getPiece(position).getTeamColor().equals(teamColor)){
+                    saveTheKingMoves.addAll(validMoves(position));
+                }
+            }
+        }
+        return saveTheKingMoves.isEmpty();
     }
 
     /**
@@ -142,8 +152,12 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+
         //forth suggestion.
+
+
+
+        return true;
     }
 
     /**
