@@ -15,7 +15,7 @@ public class ChessBoard {
     ChessPiece piece;
 
     public ChessBoard() {
-     //   ChessPiece[][] board = new ChessPiece[8][8];
+
     }
 
     /**
