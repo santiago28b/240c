@@ -112,7 +112,7 @@ public class ChessGame {
                                 }
                             } else{
                                 board.addPiece(move.getEndPosition(), piece);
-                                board.addPiece(move.getStartPosition(),null); //fix to show the promition piece
+                                board.addPiece(move.getStartPosition(),null); 
                                 if (piece.getTeamColor().equals(TeamColor.WHITE)) {
                                     setTeamTurn(TeamColor.BLACK);
                                 } else {
