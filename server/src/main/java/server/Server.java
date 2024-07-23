@@ -65,10 +65,10 @@ public class Server {
         }
     }
 
-    private Object usersRegistered(Request req, Response res) {
-        res.type("application/json");
-        return new Gson().toJson(Map.of("users", users));
-    }
+//    private Object usersRegistered(Request req, Response res) {
+//        res.type("application/json");
+//        return new Gson().toJson(Map.of("users", users));
+//    }
 
     public void stop() {
         Spark.stop();
