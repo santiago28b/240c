@@ -34,8 +34,13 @@ public class UserService {
 
   public AuthData login(UserData user) {
 
-
-    return null;
+    try{
+      userDao.getUser(user.username());
+      String token = authDao.createAuth(user);
+      return new AuthData(token,user.username());
+    }catch (DataAccessException e){
+      throw new RuntimeException(e.getMessage());
+    }
   }
   public void logout(UserData user) {}
 

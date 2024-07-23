@@ -42,8 +42,17 @@ public class Server {
     private Object loginUser(Request request, Response response) {
         String body =request.body();
         UserData newUser = new Gson().fromJson(body, UserData.class);
+            try{
+                var authData = userService.login(newUser);
+                response.status(200);
+                response.type("application/json");
+                return new Gson().toJson(Map.of("username:",authData.username(),"authToken:", authData.authToken()));
+            } catch (RuntimeException e){
+                response.status(401);
+                response.type("application/json");
+                return new Gson().toJson(Map.of("Message",e.getMessage()));
+            }
 
-            return null;
     }
 
     private Object registerUser(Request request, Response response) {
