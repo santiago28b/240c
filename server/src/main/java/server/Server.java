@@ -26,6 +26,7 @@ public class Server {
 
         Spark.post("/user",this::registerUser);
         Spark.post("/session",this::loginUser);
+        Spark.delete("/db",this::clear);
 
 
                 //start register endpoint here
@@ -39,7 +40,12 @@ public class Server {
         return Spark.port();
     }
 
-    private Object loginUser(Request request, Response response) {
+  private Object clear(Request request, Response response) {
+
+    return "";
+  }
+
+  private Object loginUser(Request request, Response response) {
         String body =request.body();
         UserData newUser = new Gson().fromJson(body, UserData.class);
             try{
@@ -62,7 +68,7 @@ public class Server {
             var authdata = userService.register(newUser);
             response.status(200);
             response.type("application/json");
-            return new Gson().toJson(Map.of("username:",authdata.username(),"authToken:", authdata.authToken()));
+            return new Gson().toJson(authdata);
         } catch (RuntimeException e){
             if(newUser.password().equals("")||newUser.email().equals("")){
                 response.status(400);
@@ -70,7 +76,7 @@ public class Server {
                 response.status(403);
             }
             response.type("application/json");
-            return new Gson().toJson(Map.of("Message", e.getMessage()));
+            return new Gson().toJson(Map.of("message", e.getMessage()));
         }
     }
 
