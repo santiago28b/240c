@@ -41,8 +41,16 @@ public class Server {
     }
 
   private Object clear(Request request, Response response) {
-
-    return "";
+            try{
+             userService.clearData();
+              response.status(200);
+              response.type("application/json");
+              return new Gson().toJson(Map.of("status", "success"));
+            } catch (RuntimeException e){
+              response.status(500);
+              response.type("application/json");
+              return new Gson().toJson(Map.of("Message",e.getMessage()));
+            }
   }
 
   private Object loginUser(Request request, Response response) {
@@ -52,7 +60,7 @@ public class Server {
                 var authData = userService.login(newUser);
                 response.status(200);
                 response.type("application/json");
-                return new Gson().toJson(Map.of("username:",authData.username(),"authToken:", authData.authToken()));
+                return new Gson().toJson(authData);
             } catch (RuntimeException e){
                 response.status(401);
                 response.type("application/json");
@@ -70,7 +78,7 @@ public class Server {
             response.type("application/json");
             return new Gson().toJson(authdata);
         } catch (RuntimeException e){
-            if(newUser.password().equals("")||newUser.email().equals("")){
+            if(newUser.password() == null||newUser.email()== null){
                 response.status(400);
             }else {
                 response.status(403);
@@ -79,11 +87,6 @@ public class Server {
             return new Gson().toJson(Map.of("message", e.getMessage()));
         }
     }
-
-//    private Object usersRegistered(Request req, Response res) {
-//        res.type("application/json");
-//        return new Gson().toJson(Map.of("users", users));
-//    }
 
     public void stop() {
         Spark.stop();

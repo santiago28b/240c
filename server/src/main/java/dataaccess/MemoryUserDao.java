@@ -10,12 +10,12 @@ public class MemoryUserDao implements UserDao{
 
   @Override
   public void clear() {
-
+    userListMemory.clear();
   }
 
   @Override
   public UserData getUser(String username) throws DataAccessException {
-    if(userListMemory.get(username) == null){
+    if(!userListMemory.containsValue(username)){
       throw  new DataAccessException("Error: unauthorized");
     }
     return userListMemory.get(username);
@@ -25,7 +25,7 @@ public class MemoryUserDao implements UserDao{
   public void CreateUser(UserData user) throws DataAccessException {
     if(userListMemory.containsValue(user)){
       throw  new DataAccessException("Error: already taken");
-    }else if(user.username().isEmpty()|| user.password().isEmpty()||user.email().isEmpty()){
+    }else if(user.username()== null|| user.password()== null||user.email()==null){
       throw new DataAccessException("Error: bad request");
     }
     userListMemory.put(user.username(),user);

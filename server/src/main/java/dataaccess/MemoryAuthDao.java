@@ -15,6 +15,8 @@ public class MemoryAuthDao implements AuthDao{
   @Override
   public void clear() {
 
+    authListMemory.clear();
+
   }
 
   @Override

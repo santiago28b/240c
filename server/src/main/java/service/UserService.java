@@ -44,4 +44,8 @@ public class UserService {
   }
   public void logout(UserData user) {}
 
+  public void clearData() {
+    userDao.clear();
+    authDao.clear();
+  }
 }
