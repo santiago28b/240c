@@ -27,11 +27,8 @@ public class Server {
         Spark.post("/user",this::registerUser);
         Spark.post("/session",this::loginUser);
         Spark.delete("/db",this::clear);
-
-
-                //start register endpoint here
-        //see if I can convert to Json an object
-
+        Spark.delete("/session",this::logout);
+        Spark.post("/game",this::create);
 
         //This line initializes the server and can be removed once you have a functioning endpoint 
         //Spark.init();
@@ -39,6 +36,28 @@ public class Server {
         Spark.awaitInitialization();
         return Spark.port();
     }
+
+  private Object create(Request request, Response response) {
+
+
+
+  }
+
+
+  private Object logout(Request request, Response response) {
+    String token = request.headers("Authorization");
+
+      try {
+        userService.logoutUser(token);
+        response.status(200);
+        response.type("application/json");
+        return new Gson().toJson(Map.of("message", "Logged out successfully"));
+      }catch (RuntimeException e){
+          response.status(401);
+          response.type("application/json");
+          return new Gson().toJson(Map.of("message",e.getMessage()));
+      }
+  }
 
   private Object clear(Request request, Response response) {
             try{

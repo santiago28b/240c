@@ -15,9 +15,9 @@ import dataaccess.MemoryAuthDao;
 public class UserService {
 
   private MemoryUserDao userDao;
-  private AuthDao authDao;
+  private MemoryAuthDao authDao;
 
-  public UserService(MemoryUserDao user, AuthDao token){
+  public UserService(MemoryUserDao user, MemoryAuthDao token){
     this.userDao = user;
     this.authDao = token;
   }
@@ -35,17 +35,27 @@ public class UserService {
   public AuthData login(UserData user) {
 
     try{
-      userDao.getUser(user.username());
+      userDao.getData(user);
       String token = authDao.createAuth(user);
       return new AuthData(token,user.username());
     }catch (DataAccessException e){
       throw new RuntimeException(e.getMessage());
     }
   }
-  public void logout(UserData user) {}
+
+  public void logoutUser(String token) {
+    try {
+      authDao.deleteAuth(token);
+    } catch (DataAccessException e){
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
 
   public void clearData() {
     userDao.clear();
     authDao.clear();
   }
+
+
 }

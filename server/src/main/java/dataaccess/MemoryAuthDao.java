@@ -23,17 +23,24 @@ public class MemoryAuthDao implements AuthDao{
   public String createAuth(UserData user) {
     UUID code = UUID.randomUUID();
     AuthData authData = new AuthData(code.toString(),user.username());
-    authListMemory.put(user.username(),authData);
+    authListMemory.put(code.toString(),authData);
     return code.toString();
   }
 
   @Override
-  public AuthData getAuth(AuthData token) {
+  public AuthData getAuth(String token) {
+
     return authListMemory.get(token);
   }
 
   @Override
-  public void deleteAuth() {
+  public void deleteAuth(String authToken) throws DataAccessException {
+    AuthData storedToken = authListMemory.get(authToken);
+    if(storedToken != null){
+      authListMemory.remove(authToken);
+    } else{
+      throw new DataAccessException("Error: unauthorized");
+    }
 
   }
 }

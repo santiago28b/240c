@@ -14,11 +14,15 @@ public class MemoryUserDao implements UserDao{
   }
 
   @Override
-  public UserData getUser(String username) throws DataAccessException {
-    if(!userListMemory.containsValue(username)){
+  public UserData getData(UserData user) throws DataAccessException {
+    if(!userListMemory.containsKey(user.username())){
       throw  new DataAccessException("Error: unauthorized");
     }
-    return userListMemory.get(username);
+    UserData storedUser = userListMemory.get(user.username());
+    if(!storedUser.password().equals(user.password())){
+      throw  new DataAccessException("Error: unauthorized");
+    }
+    return storedUser;
   }
 
   @Override
